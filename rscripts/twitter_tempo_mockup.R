@@ -25,11 +25,11 @@ options(dplyr.summarise.inform = FALSE)
 options(scipen=999)
 
 # The following should be filled with the twitter app parameters that will be used for testing
-appname <- "you_twitter_app_name"
-key <- "xxx"
-secret <- "xxx"
-access_token = "xxx"
-access_secret = "xxx"
+appname <- Sys.getenv("uppercaseBee")
+key <- Sys.getenv("CONSUMER_TOKEN")
+secret <- Sys.getenv("CONSUMER_SECRET")
+access_token = Sys.getenv("ACCESS_TOKEN")
+access_secret = Sys.getenv("ACCESS_SECRET")
 
 # Create token named "twitter_token"
 twitter_token <- create_token(
@@ -220,6 +220,9 @@ mockup_reporting_table <- mockup_prepare_output(tickers = c("AAPL", "VLVAA", "NE
 
 # Folder path to be changed as S3 address?
 
-mockup_post_charts(input_table = mockup_reporting_table, folder_path = "/Users/elioi/Documents/R_projects/mockup_twitter_tempo/images/" )
+mockup_post_charts(input_table = mockup_reporting_table, folder_path = "/application/images" )
 
-clean_all_folders(main_path = "/Users/elioi/Documents/R_projects/mockup_twitter_tempo/images")
+clean_all_folders(main_path = "/application/images")
+
+# How to run this script
+# docker-compose run r_twitter_bot Rscript /application/twitter_tempo_mockup.R

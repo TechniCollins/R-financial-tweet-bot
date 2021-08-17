@@ -1,0 +1,11 @@
+# Twitter API configs
+
+CONSUMER_TOKEN=consumer token
+CONSUMER_SECRET=consumer secret
+ACCESS_TOKEN=access token
+ACCESS_SECRET=access secret
+APP_NAME=app name
+
+# R configs
+USER=rstudio
+PASSWORD=mypass
