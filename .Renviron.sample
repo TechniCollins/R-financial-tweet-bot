@@ -9,3 +9,7 @@ APP_NAME=app name
 # R configs
 USER=rstudio
 PASSWORD=mypass
+
+# Sirv
+SIRV_CLIENT_ID=xxx
+SIRV_CLIENT_SECRET=xxx

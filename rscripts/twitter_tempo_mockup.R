@@ -165,11 +165,15 @@ mockup_plot_ticker_data <- function(input_data, ploto = FALSE){
   return(plot_d)
 }
 
-mockup_save_ticker_plot <- function(input_plot, path, file_name){
+mockup_save_ticker_plot <- function(input_plot, path, file_name, sirv_token){
   
   address = paste0(path,file_name,".png")
   
   png(filename = address,  width = 1458, height = 820)
+
+  # save image to Sirv
+  upload_to_sirv <- POST(paste0("https://api.sirv.com/v2/files/upload?filename=%2Ftwitter_bot/", ticker, ".png"), body = upload_file(paste0(folder_path,ticker,".png")), add_headers(authorization = paste("Bearer", sirv_token)))
+
   plot(input_plot)
   dev.off()
   
@@ -177,6 +181,8 @@ mockup_save_ticker_plot <- function(input_plot, path, file_name){
 }
 
 mockup_post_charts <- function(input_table, folder_path){
+  # Get Sirv bearer token
+  bearer_token <- content(POST("https://api.sirv.com/v2/token", header = ("content-type: application/json"), body = list(clientId = Sys.getenv("SIRV_CLIENT_ID"), clientSecret = Sys.getenv("SIRV_CLIENT_SECRET")), encode="json"))$token
   
   for (ticker in unique(input_table$symbol)){
     
@@ -190,7 +196,7 @@ mockup_post_charts <- function(input_table, folder_path){
         
         working_plot <- mockup_plot_ticker_data(input_data = working_data, ploto = FALSE)
         
-        mockup_save_ticker_plot(input_plot = working_plot, path = folder_path, file_name = ticker)
+        mockup_save_ticker_plot(input_plot = working_plot, path = folder_path, file_name = ticker, bearer_token)
         
         ticker_purchase_text = "Ezekiel 25:17..."
         
