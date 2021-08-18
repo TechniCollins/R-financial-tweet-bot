@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  r_twitter_bot:
+    env_file:
+      .Renviron
+    build:
+      context: .
