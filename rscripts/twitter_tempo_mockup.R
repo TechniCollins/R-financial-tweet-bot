@@ -119,14 +119,14 @@ mockup_prepare_output <- function(tickers, starting_date){
 
 mockup_plot_ticker_data <- function(input_data, ploto = FALSE){
   
-    maxdate <- max(input_data$series_data$date)
-    mindate <- min(input_data$series_data$date)
+    maxdate <- max(input_data$date)
+    mindate <- min(input_data$date)
     
     plot_a <-
-      ggplot(data = input_data$series_data) +
+      ggplot(data = input_data) +
       geom_line(aes(x = as.Date(date), y = close, group = 1), colour = "violet", size = 2) +
       theme(panel.background = element_rect(fill = 'black', colour = 'white'), panel.grid.minor =  element_line(colour = "lightgray"),  panel.grid.major =  element_line(colour = "gray")) +
-      ggtitle(paste(unique(input_data$series_data$symbol)," - stock price and volume from ",mindate," to ",maxdate, sep = "")) +
+      ggtitle(paste(unique(input_data$symbol)," - stock price and volume from ",mindate," to ",maxdate, sep = "")) +
       ylab("USD price") +
       xlab("Date") + 
       theme(plot.title = element_text(size=22),
@@ -135,7 +135,7 @@ mockup_plot_ticker_data <- function(input_data, ploto = FALSE){
             axis.title.y = element_text(size=18))
     
     plot_b <-
-      ggplot(data = input_data$series_data)+
+      ggplot(data = input_data)+
       geom_col(aes(x = as.Date(date), y = volume), colour = "green", fill = "green") +
       theme(panel.background = element_rect(fill = 'black', colour = 'white'), panel.grid.minor =  element_blank(), panel.grid.major =  element_line(colour = "gray")) +
       ylab("# securities") +
@@ -145,7 +145,7 @@ mockup_plot_ticker_data <- function(input_data, ploto = FALSE){
             axis.title.y = element_text(size=18))
   
     plot_c <-
-      ggplot(data = input_data$series_data)+
+      ggplot(data = input_data)+
       geom_col(aes(x = as.Date(date), y = volume), colour = "red", fill = "red") +
       theme(panel.background = element_rect(fill = 'black', colour = 'white'), panel.grid.minor =  element_blank(), panel.grid.major =  element_line(colour = "gray")) +
       ylab("# securities") +
@@ -171,13 +171,11 @@ mockup_save_ticker_plot <- function(input_plot, path, file_name, sirv_token){
   
   png(filename = address,  width = 1458, height = 820)
 
-  # save image to Sirv
-  upload_to_sirv <- POST(paste0("https://api.sirv.com/v2/files/upload?filename=%2Ftwitter_bot/", ticker, ".png"), body = upload_file(paste0(folder_path,ticker,".png")), add_headers(authorization = paste("Bearer", sirv_token)))
-
   plot(input_plot)
   dev.off()
-  
-  print(address)
+
+  # save image to Sirv
+  upload_to_sirv <- POST(paste0("https://api.sirv.com/v2/files/upload?filename=%2Ftwitter_bot/", file_name, ".png"), body = upload_file(paste0(path,file_name,".png")), add_headers(authorization = paste("Bearer", sirv_token)))
 }
 
 mockup_post_charts <- function(input_table, folder_path){
@@ -198,7 +196,7 @@ mockup_post_charts <- function(input_table, folder_path){
         
         mockup_save_ticker_plot(input_plot = working_plot, path = folder_path, file_name = ticker, bearer_token)
         
-        ticker_purchase_text = "Ezekiel 25:17..."
+        ticker_purchase_text = "Testing..."
         
         post_tweet(ticker_purchase_text, media = paste0(folder_path,ticker,".png"))
         
@@ -226,9 +224,9 @@ mockup_reporting_table <- mockup_prepare_output(tickers = c("AAPL", "VLVAA", "NE
 
 # Folder path to be changed as S3 address?
 
-mockup_post_charts(input_table = mockup_reporting_table, folder_path = "/application/images" )
+mockup_post_charts(input_table = mockup_reporting_table, folder_path = "/application/images/" )
 
-clean_all_folders(main_path = "/application/images")
+clean_all_folders(main_path = "/application/images/")
 
 # How to run this script
 # docker-compose run r_twitter_bot Rscript /application/twitter_tempo_mockup.R
