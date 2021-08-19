@@ -22,3 +22,6 @@ RUN apt-get update && apt-get install -y\
 
 # install packages
 RUN Rscript $APP_HOME/packages.R
+
+# Run the script
+CMD ["Rscript","/application/twitter_tempo_mockup.R"]

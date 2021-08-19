@@ -228,5 +228,8 @@ mockup_post_charts(input_table = mockup_reporting_table, folder_path = "/applica
 
 clean_all_folders(main_path = "/application/images/")
 
-# How to run this script
-# docker-compose run r_twitter_bot Rscript /application/twitter_tempo_mockup.R
+# How to build the image
+# docker-compose up --build
+
+# CRON job
+# 0 20 * * 2,3,4,5,6 docker run mockup_twitter_bot_r_twitter_bot
