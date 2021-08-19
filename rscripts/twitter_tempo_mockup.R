@@ -175,12 +175,12 @@ mockup_save_ticker_plot <- function(input_plot, path, file_name, sirv_token){
   dev.off()
 
   # save image to Sirv
-  upload_to_sirv <- POST(paste0("https://api.sirv.com/v2/files/upload?filename=%2Ftwitter_bot/", file_name, ".png"), body = upload_file(paste0(path,file_name,".png")), add_headers(authorization = paste("Bearer", sirv_token)))
+  # upload_to_sirv <- POST(paste0("https://api.sirv.com/v2/files/upload?filename=%2Ftwitter_bot/", file_name, ".png"), body = upload_file(paste0(path,file_name,".png")), add_headers(authorization = paste("Bearer", sirv_token)))
 }
 
 mockup_post_charts <- function(input_table, folder_path){
   # Get Sirv bearer token
-  bearer_token <- content(POST("https://api.sirv.com/v2/token", header = ("content-type: application/json"), body = list(clientId = Sys.getenv("SIRV_CLIENT_ID"), clientSecret = Sys.getenv("SIRV_CLIENT_SECRET")), encode="json"))$token
+  # bearer_token <- content(POST("https://api.sirv.com/v2/token", header = ("content-type: application/json"), body = list(clientId = Sys.getenv("SIRV_CLIENT_ID"), clientSecret = Sys.getenv("SIRV_CLIENT_SECRET")), encode="json"))$token
   
   for (ticker in unique(input_table$symbol)){
     
@@ -231,5 +231,6 @@ clean_all_folders(main_path = "/application/images/")
 # How to build the image
 # docker-compose up --build
 
-# CRON job
-# 0 20 * * 2,3,4,5,6 docker run mockup_twitter_bot_r_twitter_bot
+# CRONTAB
+# PATH=/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin
+# 0 20 * * 2,3,4,5,6 cd /root/mockup_twitter_bot && docker-compose up > /root/twitter_bot_logs.log 2>&1
