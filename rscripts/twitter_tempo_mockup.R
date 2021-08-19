@@ -231,5 +231,6 @@ clean_all_folders(main_path = "/application/images/")
 # How to build the image
 # docker-compose up --build
 
-# CRON job
-# 0 20 * * 2,3,4,5,6 docker run mockup_twitter_bot_r_twitter_bot
+# CRONTAB
+# PATH=/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin
+# 0 20 * * 2,3,4,5,6 cd /root/mockup_twitter_bot && docker-compose up > /root/twitter_bot_logs.log 2>&1
