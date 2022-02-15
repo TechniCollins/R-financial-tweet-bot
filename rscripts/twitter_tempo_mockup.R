@@ -48,7 +48,7 @@ mockup_get_ticker_data <- function(ticker, min_date){
   
   ## 1. ticker series
   
-  call_1 <- paste0("https://financialmodelingprep.com/api/v3/technical_indicator/daily/",ticker,"?period=20&type=ema&apikey=5ca27a5e621ee543209bcf00820b333a")
+  call_1 <- paste0("https://financialmodelingprep.com/api/v3/technical_indicator/daily/",ticker,"?period=20&type=ema&apikey=your-api-key")
   
   ticker_history <- GET(call_1)
   
@@ -65,7 +65,7 @@ mockup_get_ticker_data <- function(ticker, min_date){
   
   ## 2. Additional info
   
-  call_2 <- paste0("https://financialmodelingprep.com/api/v3/profile/",ticker,"?apikey=5ca27a5e621ee543209bcf00820b333a")
+  call_2 <- paste0("https://financialmodelingprep.com/api/v3/profile/",ticker,"?apikey=your-api-key")
   
   ticker_profile <- GET(call_2)
   
